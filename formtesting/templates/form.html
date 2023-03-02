@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>tinymce.init({selector:'textareaa'});</script>
+    <style>
+		.input-group {
+			display: inline-block;
+			vertical-align: top;
+			margin-right: 10px;
+		}
+		.input-group label {
+			display: block;
+			margin-bottom: 5px;
+			font-size: 16px;
+			font-weight: bold;
+		}
+		.input-group input {
+			display: block;
+			width: 100%;
+			padding: 5px;
+			font-size: 16px;
+			line-height: 1.5;
+		}
+        body {
+     margin-left: 80px; /* adjust the value as needed */
+    }
+    body {
+     margin-right: 80px; /* adjust the value as needed */
+    }
+    .a{
+      margin-left: -80px;
+    }
+     input[type="text"]::placeholder {
+    text-align: center;
+    padding: 10px 0; /* Adjust the padding as needed */
+  }
+  .form-control {
+    margin-right: 20px; /* Add some right margin to the text area */
+  }
+  button {
+    margin-top: 5px; /* Add some top margin to the button */
+    background-color:lightsalmon; /* Set the background color of the button to red */
+    color: black; /* Set the color of the text to black */
+    border: none; /* Remove the button border */
+    border-radius: 20px; /* Add some border radius to the button */
+    padding: 10px 20px;
+  }
+  
+
+  .A{
+    background-color:green; /* Set the background color of the button to red */
+    color: black; /* Set the color of the text to black */
+    margin-top: 60px; /* Add some top margin to the button */
+    margin-left: 0px
+  }
+  .B{
+    margin-top: 0px;
+    margin-right: -40px;
+  }
+  
+  
+	</style>
+
+</head>
+<body>
+  <h2 class="a">Sessions List</h2>
+    <label for="name"><strong><em>Session name:</em></strong></label> <br>
+    <input type="text" id="session" name="session" required size="150" placeholder="simple text"> 
+    <button type="submit" class="B" style="float: right;"><strong>Delete</strong></button> <br><br>
+    <label for="description" style="float: left;"><strong><em>Session descriptions and milestones :</em></strong></label> <br>
+    <div style="clear: both;"></div>
+          <textareaa rows="10"  class="form-control" ></textareaa>
+    <label for="name"><strong><em>Assignments:</em></strong></label> <br> <br>
+    <div class="input-group">
+        <label for="title">Title</label>
+          <div class="input-group-append">
+            <textarea class="form-control" rows="3" placeholder="Simpl"></textarea>
+          </div>
+        </div>
+	<div class="input-group">
+        <label for="description">Description</label>
+          <div class="input-group-append">
+            <textarea class="form-control" rows="7" placeholder="Multiple Text"></textarea>
+          </div>
+        </div>
+	<div class="input-group">
+		<label for="time">Est time</label>
+          <div class="input-group-append">
+            <textarea class="form-control" rows="3" placeholder="numerical"></textarea>
+          </div>
+        </div>
+	<div class="input-group">
+    <label for="submission">Submission <br> delay</label>
+    <div class="input-group-append">
+            <textarea class="form-control" rows="3" placeholder="num"></textarea>
+            <button type="submit" style="float: right; color:black;border-radius: 20px;" > <strong>Delete <br> assignement</strong></button>
+            <div style="clear: both;"></div>
+        </div>
+        </div>
+        <br>
+        <button type="submit" class="A" ><strong>Add assignement for this session</strong></button>
+</body>
+
+</html>
+<script language="JavaScript" type="text/javascript" src="/js/jquery-1.2.6.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="/js/jquery-ui-personalized-1.5.2.packed.js"></script>
+<script language="JavaScript" type="text/javascript" src="/js/sprinkle.js"></script>
+<script>
+    $(document).ready(function(){
+    var placeholder_text=placeholder_text='.... \n....\n.... \n.\n.\n.';
+    $('textarea').attr('placeholder',placeholder_text);
+    $('textarea').focus(function(){
+        $('textarea').attr('placeholder','');
+    });
+    $('textarea').blur(function(){
+        $('textarea').attr('placeholder',placeholder_text);
+    });
+})  
+</script>
