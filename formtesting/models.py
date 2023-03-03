@@ -29,19 +29,16 @@ class Session(models.Model):
     name = models.CharField(max_length=256, blank=True, null=True)
     session_description = tinymce_models.HTMLField(
         help_text="Session Description", blank=True, null=True)
-    learningoutcome = models.CharField(help_text="Learning outcome",
-                                       max_length=256,
-                                       blank=True,
-                                       null=True)
+    #    learningoutcome = models.CharField(help_text="Learning outcome",
+    #                                        max_length=256,
+    #                                        blank=True,
+    #                                        null=True)
     skill = models.ManyToManyField(Skill)
 
     course = models.ForeignKey(Course, on_delete=models.CASCADE, default=1)
 
     class Meta:
         db_table = 'Session'
-
-    def __str__(self):
-        return self.name
 
 
 class Assignment(models.Model):
@@ -55,11 +52,9 @@ class Assignment(models.Model):
                                          blank=True)
     session = models.ForeignKey(Session,
                                 on_delete=models.CASCADE,
+                       
                                 blank=True,
                                 null=True)
 
     class Meta:
         db_table = 'Assignment'
-
-    def __str__(self):
-        return self.session.name

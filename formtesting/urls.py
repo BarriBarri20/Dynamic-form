@@ -26,25 +26,25 @@ from .views import  (
 urlpatterns = [
 
     path('', TemplateView.as_view(template_name="home.html"), name='create-session'),
-    path('<pk>/', create_session, name='create-session'),
-    path('htmx/session/<pk>/', detail_session, name="detail-session"),
-    path('htmx/session/<pk>/update/', update_session, name="update-session"),
-    path('htmx/session/<pk>/delete/', delete_session, name="delete-session"),
+    path('<int:pk>/', create_session, name='create-session'),
+    path('htmx/session/<int:pk>/', detail_session, name="detail-session"),
+    path('htmx/session/<int:pk>/update/', update_session, name='update-session'),
+    path('htmx/session/<int:pk>/delete/', delete_session, name="delete-session"),
     path('htmx/create-session-form/', create_session_form, name='create-session-form'),
     
-    path('<pk>/', create_assignment, name='create-assignment'),
-    path('htmx/assignment/<pk>/', detail_assignment, name="detail-assignment"),
-    path('htmx/assignment/<pk>/update/', update_assignment, name="update-assignment"),
-    path('htmx/assignment/<pk>/delete/', delete_assignment, name="delete-assignment"),
+    path('<int:pk>/', create_assignment, name='create-assignment'),
+    path('htmx/assignment/<int:pk>/', detail_assignment, name="detail-assignment"),
+    path('htmx/assignment/<int:pk>/update/', update_assignment, name="update-assignment"),
+    path('htmx/assignment/<int:pk>/delete/', delete_assignment, name="delete-assignment"),
     path('htmx/create-assignment-form/', create_assignment_form, name='create-assignment-form'),
     
-    
-    path('<pk>/', create_skill, name='create-skill'),
-    path('htmx/skill/<pk>/', detail_skill, name="detail-skill"),
-    path('htmx/skill/<pk>/update/', update_skill, name="update-skill"),
-    path('htmx/skill/<pk>/delete/', delete_skill, name="delete-skill"),
+    path('<int:pk>/', create_skill, name='create-skill'),
+    path('htmx/skill/<int:pk>/', detail_skill, name="detail-skill"),
+    path('htmx/skill/<int:pk>/update/', update_skill, name="update-skill"),
+    path('htmx/skill/<int:pk>/delete/', delete_skill, name="delete-skill"),
     path('htmx/create-skill-form/', create_skill_form, name='create-skill-form'),
     
+    path('tinymce/', include('tinymce.urls')),
 ]
 
 

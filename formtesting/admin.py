@@ -1,14 +1,24 @@
 from django.contrib import admin
-from django.db import models
-from .models import Session, Course
+from .models import Session, Course, Assignment, Skill
+
+from django.contrib import admin
+from .models import Course, Session, Assignment
 
 
-class SessionInLineAdmin(admin.TabularInline):
-    model = Session
+class AssignmentInline(admin.TabularInline):
+    model = Assignment
+    extra = 1
 
 
+@admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    inlines = [SessionInLineAdmin]
+    list_display = ("id", "name")
+    list_display_links = ("name", )
 
 
-admin.site.register(Course)
+@admin.register(Session)
+class SessionAdmin(admin.ModelAdmin):
+    list_display = ("id", "name", "course")
+    list_display_links = ("name", )
+
+    inlines = (AssignmentInline, )

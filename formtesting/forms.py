@@ -1,5 +1,7 @@
 from django import forms
 from django.forms.models import inlineformset_factory
+from django.contrib.admin import widgets as widget_element
+from django.contrib.admin import site as admin_site
 
 from .models import Assignment, Course, Session, Skill
 
@@ -15,21 +17,30 @@ class SessionForm(forms.ModelForm):
 
     class Meta:
         model = Session
-        fields = '__all__'
-        fields = ['name', 'session_description', 'learningoutcome', 'skill']
+
+        fields = [
+            'name',
+            'session_description',
+            'skill',
+        ]
         widgets = {
             'name':
             forms.TextInput(attrs={'class': 'form-control'}),
             'session_description':
             forms.Textarea(attrs={
-                'class': 'form-control',
+                'class': 'form-control rich-text',
                 'id': 'richtext_field'
             }),
-            'learnigoutcome':
-            forms.NumberInput(attrs={'class': 'form-control'}),
-            'skill':
-            forms.NumberInput(attrs={'class': 'form-control'}),
         }
+        skill = forms.ModelMultipleChoiceField(
+            Skill.objects.all(),
+            widget=widget_element.RelatedFieldWidgetWrapper(
+                widget=widget_element.FilteredSelectMultiple(
+                    'Keywords', False),
+                rel=Session.skill.rel,
+                admin_site=admin_site),
+            required=False,
+        )
 
 
 class AssignmentForm(forms.ModelForm):
@@ -71,17 +82,23 @@ class SkillForm(forms.ModelForm):
         model = Skill
         fields = ['skillname']
 
+        skillname = forms.ModelChoiceField(
+            queryset=Skill.objects.all(),
+            to_field_name='skillname',
+            required=False,
+            widget=forms.Select(attrs={'class': 'form-control'}))
 
-SessionFormSet = inlineformset_factory(Course,
-                                       Session,
-                                       form=SessionForm,
-                                       min_num=1,
-                                       extra=1,
-                                       can_delete=True)
 
-AssignmentFormSet = inlineformset_factory(Session,
-                                          Assignment,
-                                          form=AssignmentForm,
-                                          min_num=1,
-                                          extra=1,
-                                          can_delete=True)
+# SessionFormSet = inlineformset_factory(Course,
+#                                        Session,
+#                                        form=SessionForm,
+#                                        min_num=1,
+#                                        extra=1,
+#                                        can_delete=True)
+
+# AssignmentFormSet = inlineformset_factory(Session,
+#                                           Assignment,
+#                                           form=AssignmentForm,
+#                                           min_num=1,
+#                                           extra=1,
+#                                           can_delete=True)
