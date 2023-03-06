@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="md:flex md:items-center md:justify-between">
+    <div class="flex-1 min-w-0">
+        <form method="post" action="{% url 'update-course' course_id %}" class='submit-me'>
+            {% csrf_token %}
+            {{ course_form }}
+        </form>
+    </div>
+
+</div>
+
+<div id="sessionforms" class="py-5 mt-5">
+
+</div>
+
+
+<div class="mt-5 py-5 border-t border-gray-100">
+    {% for session, session_form in sessions_and_forms %}
+
+    {% include "partials/update_session_form.html" %}
+
+    {% endfor %}
+</div>
+
+<div class="mt-4 flex md:mt-0 md:ml-4">
+    <button type="button" hx-get="{% url 'create-session-form' pk=1 ck=course_id%}" hx-target="#sessionforms" hx-swap="beforeend"
+        class="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        Add Session
+    </button>
+</div>
+<br>
+<br>
+<button id="submit-all-forms" class="inline-flex items-center px-3 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+Submit the full form from here!
+</button>
+
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script>
+        const submitButton = document.querySelector('#submit-all-forms');
+    
+        submitButton.addEventListener('click', async (event) => {
+        event.preventDefault();
+    
+        const forms = document.querySelectorAll('.submit-me');
+    
+        // loop through each form and submit it
+        for (let i = 0; i < forms.length; i++) {
+          const form = forms[i];
+    
+          try {
+            await submitForm(form);
+          } catch (error) {
+            console.error(error);
+          }
+        }
+      });
+    
+      async function submitForm(form) {
+        const formData = new FormData(form);
+    
+        // send the form data to the server
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+        });
+    
+        // throw an error if the response is not OK
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+      }
+    </script>
+    <script>
+        $(document).on('click', '.delete-button', function() {
+            
+            console.log("delete button clicked");
+            var part = $(this).closest('.part');
+            var partId = part.attr('id');
+            part.remove();
+            console.log(partId);
+            event.preventDefault();
+            $.ajax({
+                url: partId,
+                type: 'DELETE',
+                headers: { "X-CSRFToken": getCookie("csrftoken") },
+                success: function(response) {
+                    console.log('Success:', response);
+                    // Handle success response here
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                    console.log('error')
+                    // Handle error response here
+                }
+            });
+
+      });
+
+    function getCookie(c_name){
+    if (document.cookie.length > 0)
+    {
+        c_start = document.cookie.indexOf(c_name + "=");
+        if (c_start != -1)
+        {
+            c_start = c_start + c_name.length + 1;
+            c_end = document.cookie.indexOf(";", c_start);
+            if (c_end == -1) c_end = document.cookie.length;
+            return unescape(document.cookie.substring(c_start,c_end));
+        }
+    }
+    return "";
+ }
+
+  </script>
+
+
+{% endblock %}
+
+

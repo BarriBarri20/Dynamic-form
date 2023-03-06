@@ -80,7 +80,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         'OPTIONS': {
-            'options': '-c search_path=myschema'
+            'options': '-c search_path=my_new_schema'
         },
         "NAME": "citus",
         "USER": "citus",

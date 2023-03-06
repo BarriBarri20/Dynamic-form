@@ -2,6 +2,9 @@ from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from .forms import AssignmentForm, CourseForm, SessionForm, LearningOutcomeForm
 from .models import Course, Session, Assignment, LearningOutcome
+from django.forms import formset_factory
+
+SessionFormSet = formset_factory(SessionForm, extra=0)
 
 
 def create_course(request, pk=None):
@@ -12,7 +15,6 @@ def create_course(request, pk=None):
             return redirect('detail-course', pk=course.pk)
     else:
         course = Course.objects.create()
-        course.save()
         course_id = course.id
         form = CourseForm()
 
@@ -64,6 +66,85 @@ def create_learningoutcome(request, pk=None, sk=None):
         'form': form,
         'learningoutcome_id': learningoutcome_id
     })
+
+
+
+def edit_course(request, course_id):
+    course = Course.objects.get(id=course_id)
+    course_form = CourseForm(instance=course)
+    sessions_and_forms = []
+    for session in Session.objects.filter(course=course):
+        session_form = SessionForm(instance=session)
+        sessions_and_forms.append((session.id, session_form))
+    context = {
+        'course': course,
+        'sessions_and_forms': sessions_and_forms,
+        'course_id': course_id,
+        'course_form': course_form,
+    }
+    return render(request, 'edit_course.html', context)
+
+
+def edit_learningoutcome(request, sk):
+    session = Session.objects.get(id=sk)
+    assignments_and_forms = []
+    for assignment in Assignment.objects.filter(session=session):
+        assignment_form = AssignmentForm(instance=assignment)
+        assignments_and_forms.append((assignment.id, assignment_form))
+        
+    learningoutcomes_and_forms = []
+    
+    for learningoutcome in LearningOutcome.objects.filter(session=session):
+        learningoutcome_form = LearningOutcomeForm(instance=learningoutcome)
+        learningoutcomes_and_forms.append((learningoutcome.id, learningoutcome_form))
+    context = {
+        'session': session,
+        'learningoutcomes_and_forms': learningoutcomes_and_forms,
+    }
+    return render(request, 'partials/update_learningoutcome_form.html', context)
+
+
+def edit_assignment(request, sk):
+    print('called!')
+    session = Session.objects.get(id=sk)
+    assignments_and_forms = []
+    for assignment in Assignment.objects.filter(session=session):
+        assignment_form = AssignmentForm(instance=assignment)
+        assignments_and_forms.append((assignment.id, assignment_form))
+        
+    learningoutcomes_and_forms = []
+    
+    for learningoutcome in LearningOutcome.objects.filter(session=session):
+        learningoutcome_form = LearningOutcomeForm(instance=learningoutcome)
+        learningoutcomes_and_forms.append((learningoutcome.id, learningoutcome_form))
+    context = {
+        'session': session,
+        'assignments_and_forms': assignments_and_forms,
+        'learningoutcomes_and_forms': learningoutcomes_and_forms,
+    }
+    return render(request, 'partials/update_assignment_form.html', context)
+
+
+def edit_session(request, pk):
+    if request.method == 'POST':
+        print(request.POST)
+        form = SessionForm(request.POST, instance=Session.objects.get(id=pk))
+        if form.is_valid():
+            form.save()
+
+        return HttpResponse('Session updated')
+
+    session = get_object_or_404(Session, id=pk)
+    form = SessionForm(instance=session)
+    
+
+    context = {
+        'session-form': form,
+        'sk': session.id,
+        'assignments': Assignment.objects.filter(session=session),
+        'learningoutcomes': LearningOutcome.objects.filter(session=session)
+    }
+    return render(request, 'edit_session.html', context)
 
 
 def update_course(request, pk):
@@ -123,6 +204,7 @@ def delete_assignment(response, pk):
 
 
 def delete_learningoutcome(response, pk):
+    print("done hereeee")
     learningoutcome = get_object_or_404(LearningOutcome, id=pk)
     learningoutcome.delete()
     return HttpResponse('Learning Outcome deleted')
