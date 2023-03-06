@@ -84,8 +84,8 @@ DATABASES = {
         },
         "NAME": "citus",
         "USER": "citus",
-        "PASSWORD": "",
-        "HOST": "c.test-akram.postgres.database.azure.com",
+        "PASSWORD": "Test",
+        "HOST": "c.test-akram..database.azure.com",
         "PORT": "5432",
     }
 }
@@ -141,37 +141,34 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 TINYMCE_JS_URL = "https://cdn.tiny.cloud/1/c4vjxqcbbwlutp6mzg85i4i6anstc0pwscwchpunhbwda00e/tinymce/6/tinymce.min.js"
 
-TINYMCE_COMPRESSOR = False
+TINYMCE_COMPRESSOR = True
 
 TINYMCE_DEFAULT_CONFIG = {
-    'height': 100,
-    'width': 40,
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 20,
     'selector': 'textarea',
-    'theme': 'modern',
+    'theme': 'silver',
     'plugins': '''
-   textcolor save link image media preview codesample contextmenu
-   table code lists fullscreen insertdatetime nonbreaking
-   contextmenu directionality searchreplace wordcount visualblocks
-   visualchars code fullscreen autolink lists charmap print hr
-   anchor pagebreak
-   ''',
+            textcolor save link image media preview codesample contextmenu
+            table code lists fullscreen  insertdatetime  nonbreaking
+            contextmenu directionality searchreplace wordcount visualblocks
+            visualchars code fullscreen autolink lists  charmap print  hr
+            anchor pagebreak
+            ''',
     'toolbar1': '''
-   fullscreen preview bold italic underline | fontselect,
-   fontsizeselect | forecolor backcolor | alignleft alignright |
-   aligncenter alignjustify | indent outdent | bullist numlist table |
-   | link image media | codesample |
-   ''',
+            fullscreen preview bold italic underline | fontselect,
+            fontsizeselect  | forecolor backcolor | alignleft alignright |
+            aligncenter alignjustify | indent outdent | bullist numlist table |
+            | link image media | codesample |
+            ''',
     'toolbar2': '''
-   visualblocks visualchars |
-   charmap hr pagebreak nonbreaking anchor | code |
-   ''',
+            visualblocks visualchars |
+            charmap hr pagebreak nonbreaking anchor |  code |
+            ''',
     'contextmenu': 'formats | link image',
     'menubar': True,
     'statusbar': True,
 }
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"

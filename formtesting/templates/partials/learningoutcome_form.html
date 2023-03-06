@@ -1,0 +1,25 @@
+{%load tailwind_filters %}
+<div class="flex flex-row justify-between part" id="delete-learningoutcome/{{learningoutcome_id}}">
+    <div hx-target="this" hx-swap="outerHTML" class="mt-3 py-3 px-3 bg-white shadow border border-gray-100 part">
+        <form method="POST" action="{% url 'update-learningoutcome' learningoutcome_id %}" class='submit-me'>
+            <table class="table table-auto">
+                {% csrf_token %}
+                <tbody>
+                        <tr>
+                            {% for item in form.visible_fields %}
+                                <td class="col-md-4" >{{item}}</td>
+                            {% endfor %}
+                        </tr>
+                </tbody>
+
+            </table>
+        </form>
+    </div>
+    <div class="w-full md:w-1/4 mt-3 py-3 px-3">
+        <button type="button" class="delete-button ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+        Delete</button>
+    </div>
+</div>
+
+<br>
+<br>

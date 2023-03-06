@@ -2,8 +2,15 @@ from django import forms
 from django.forms.models import inlineformset_factory
 from django.contrib.admin import widgets as widget_element
 from django.contrib.admin import site as admin_site
+from tinymce import TinyMCE
 
-from .models import Assignment, Course, Session, Skill
+from .models import Assignment, Course, Session, Skill, LearningOutcome
+
+
+class TinyMCEWidget(TinyMCE):
+
+    def use_required_attribute(self, *args):
+        return False
 
 
 class CourseForm(forms.ModelForm):
@@ -11,6 +18,9 @@ class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
         fields = ['name']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+        }
 
 
 class SessionForm(forms.ModelForm):
@@ -21,23 +31,37 @@ class SessionForm(forms.ModelForm):
         fields = [
             'name',
             'session_description',
-            'skill',
         ]
         widgets = {
             'name':
             forms.TextInput(attrs={'class': 'form-control'}),
             'session_description':
-            forms.Textarea(attrs={
+            TinyMCEWidget(attrs={
+                'required': False,
+                'cols': 30,
+                'rows': 10
+            }),
+        }
+
+
+class LearningOutcomeForm(forms.ModelForm):
+
+    class Meta:
+        model = LearningOutcome
+        fields = ['learningoutcome', 'skill']
+        widgets = {
+            'learningoutcome':
+            forms.TextInput(attrs={
                 'class': 'form-control rich-text',
                 'id': 'richtext_field'
             }),
         }
-        skill = forms.ModelMultipleChoiceField(
+        skill = forms.ModelChoiceField(
             Skill.objects.all(),
             widget=widget_element.RelatedFieldWidgetWrapper(
                 widget=widget_element.FilteredSelectMultiple(
                     'Keywords', False),
-                rel=Session.skill.rel,
+                rel=LearningOutcome.skill.rel,
                 admin_site=admin_site),
             required=False,
         )
@@ -87,18 +111,3 @@ class SkillForm(forms.ModelForm):
             to_field_name='skillname',
             required=False,
             widget=forms.Select(attrs={'class': 'form-control'}))
-
-
-# SessionFormSet = inlineformset_factory(Course,
-#                                        Session,
-#                                        form=SessionForm,
-#                                        min_num=1,
-#                                        extra=1,
-#                                        can_delete=True)
-
-# AssignmentFormSet = inlineformset_factory(Session,
-#                                           Assignment,
-#                                           form=AssignmentForm,
-#                                           min_num=1,
-#                                           extra=1,
-#                                           can_delete=True)

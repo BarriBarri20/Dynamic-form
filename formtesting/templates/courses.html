@@ -1,9 +1,0 @@
-<h1>Here is the courses:</h1>
-
-<a href="{% url 'course_create' %}"> Create a new session by clicking here<a>
-
-    <ul>
-        {% for course in courses %}
-            <li class="card-body">{{ course.name }} | <a href="{% url 'course _sessions_update' course.id %}">Edit</a></li>
-        {% endfor %}
-    </ul>
