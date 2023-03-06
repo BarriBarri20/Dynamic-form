@@ -84,8 +84,8 @@ DATABASES = {
         },
         "NAME": "citus",
         "USER": "citus",
-        "PASSWORD": "Test",
-        "HOST": "c.test-akram..database.azure.com",
+        "PASSWORD": "",
+        "HOST": "",
         "PORT": "5432",
     }
 }

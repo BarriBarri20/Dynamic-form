@@ -21,15 +21,14 @@ class Skill(models.Model):
     class Meta:
         db_table = 'Skill'
 
-    # def __str__(self):
-    #     return self.skillname
+    def __str__(self):
+        return self.skillname
 
 
 class Session(models.Model):
     name = models.CharField(max_length=256, blank=True, null=True)
     session_description = tinymce_models.HTMLField(
         help_text="Session Description", blank=True, null=True)
-
 
     course = models.ForeignKey(Course, on_delete=models.CASCADE, default=1)
 
@@ -43,7 +42,11 @@ class LearningOutcome(models.Model):
                                        max_length=256,
                                        blank=True,
                                        null=True)
-    skill = models.ManyToManyField(Skill)
+    skills = models.ManyToManyField(Skill,
+                              blank=True,
+                              null=True,
+                              verbose_name='Skill',
+                              )
 
     session = models.ForeignKey(Session,
                                 on_delete=models.CASCADE,

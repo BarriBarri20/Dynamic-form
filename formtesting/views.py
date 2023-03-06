@@ -77,6 +77,7 @@ def update_course(request, pk):
 
 def update_session(request, pk):
     if request.method == 'POST':
+        print(request.POST)
         form = SessionForm(request.POST, instance=Session.objects.get(id=pk))
         if form.is_valid():
             form.save()
@@ -96,9 +97,13 @@ def update_assignment(request, pk):
 
 def update_learningoutcome(request, pk):
     if request.method == 'POST':
-        form = LearningOutcomeForm(request.POST,
-                                   instance=LearningOutcome.objects.get(id=pk))
+
+        learningoutcome = get_object_or_404(LearningOutcome, pk=pk)
+
+        form = LearningOutcomeForm(request.POST, instance=learningoutcome)
+        print(form.errors)
         if form.is_valid():
+            print("okay")
             form.save()
 
         return HttpResponse('Learning Outcome updated')
@@ -109,11 +114,13 @@ def delete_session(response, pk):
     session.delete()
     return HttpResponse('Session deleted')
 
+
 def delete_assignment(response, pk):
     print(pk)
     assignment = get_object_or_404(Assignment, id=pk)
     assignment.delete()
     return HttpResponse('Assignment deleted')
+
 
 def delete_learningoutcome(response, pk):
     learningoutcome = get_object_or_404(LearningOutcome, id=pk)

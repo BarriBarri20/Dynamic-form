@@ -48,23 +48,22 @@ class LearningOutcomeForm(forms.ModelForm):
 
     class Meta:
         model = LearningOutcome
-        fields = ['learningoutcome', 'skill']
+        fields = ['learningoutcome', 'skills']
         widgets = {
-            'learningoutcome':
-            forms.TextInput(attrs={
+            'learningoutcome': forms.TextInput(attrs={
                 'class': 'form-control rich-text',
                 'id': 'richtext_field'
             }),
+            'skills': forms.SelectMultiple(attrs={
+                'class': 'border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
+            }),
         }
-        skill = forms.ModelChoiceField(
-            Skill.objects.all(),
-            widget=widget_element.RelatedFieldWidgetWrapper(
-                widget=widget_element.FilteredSelectMultiple(
-                    'Keywords', False),
-                rel=LearningOutcome.skill.rel,
-                admin_site=admin_site),
-            required=False,
-        )
+
+    skills = forms.ModelMultipleChoiceField(
+        queryset=Skill.objects.all(),
+        required=False,
+        blank=True,
+    )
 
 
 class AssignmentForm(forms.ModelForm):
@@ -103,11 +102,7 @@ class AssignmentForm(forms.ModelForm):
 class SkillForm(forms.ModelForm):
 
     class Meta:
-        model = Skill
-        fields = ['skillname']
 
-        skillname = forms.ModelChoiceField(
-            queryset=Skill.objects.all(),
-            to_field_name='skillname',
-            required=False,
-            widget=forms.Select(attrs={'class': 'form-control'}))
+        model = Skill
+
+        fields = ['skillname']
