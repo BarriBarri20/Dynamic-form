@@ -6,7 +6,7 @@
     <div class="flex-1 min-w-0">
         <form method="post" action="{% url 'update-course' course_id %}" class='submit-me'>
             {% csrf_token %}
-            {{ form.as_p }}
+            {{ form }}
         </form>
     </div>
 

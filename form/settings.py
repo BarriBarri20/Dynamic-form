@@ -84,8 +84,8 @@ DATABASES = {
         },
         "NAME": "citus",
         "USER": "citus",
-        "PASSWORD": "",
-        "HOST": "",
+        "PASSWORD": "Test$Test",
+        "HOST": "c.test-akram.postgres.database.azure.com",
         "PORT": "5432",
     }
 }

@@ -19,8 +19,15 @@ class CourseForm(forms.ModelForm):
         model = Course
         fields = ['name']
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'name':
+            forms.TextInput(
+                attrs={
+                    'class':
+                    'border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
+                    
+                }),
         }
+        labels = {'name': 'Enter the name of your class!'}
 
 
 class SessionForm(forms.ModelForm):
@@ -50,13 +57,19 @@ class LearningOutcomeForm(forms.ModelForm):
         model = LearningOutcome
         fields = ['learningoutcome', 'skills']
         widgets = {
-            'learningoutcome': forms.TextInput(attrs={
-                'class': 'form-control rich-text',
-                'id': 'richtext_field'
-            }),
-            'skills': forms.SelectMultiple(attrs={
-                'class': 'border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
-            }),
+            'learningoutcome':
+            forms.TextInput(
+                attrs={
+                    'class':
+                    'border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
+                    'id': 'richtext_field'
+                }),
+            'skills':
+            forms.SelectMultiple(
+                attrs={
+                    'class':
+                    'form-multiselect block w-full mt-1 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0',
+                }),
         }
 
     skills = forms.ModelMultipleChoiceField(
