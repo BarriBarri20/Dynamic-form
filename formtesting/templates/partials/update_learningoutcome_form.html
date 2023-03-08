@@ -1,5 +1,6 @@
 {%load tailwind_filters %}
 
+
 {% for learningoutcome_id, learningoutcome_form in learningoutcomes_and_forms %}
 <div class="flex flex-row justify-between part" id="delete-learningoutcome/{{learningoutcome_id}}">
     <div hx-target="this" hx-swap="outerHTML" class="mt-3 py-3 px-3 bg-white shadow border border-gray-100 part">
@@ -8,12 +9,13 @@
             <table>
                 <tbody>
                     <tr>
-                        
                         <td class="col-md-8">{{ learningoutcome_form.learningoutcome }}</td>
                         <td><label for="{{ learningoutcome_form.skills.id_for_label }}" class="mb-2 font-bold text-lg text-gray-900">{{ learningoutcome_form.skills.label }}</label>
                             <select name="{{ learningoutcome_form.skills.name }}" id="{{ learningoutcome_form.skills.id_for_label }}" class="form-control">
                                 {% for skill in learningoutcome_form.skills.field.choices %}
-                                    <option value="{{ skill.0 }}" {% if learningoutcome_form.skills.value|default_if_none:'' == skill.0 %}selected{% endif %}>{{ skill.1 }}</option>
+
+                                
+                                <option value="{{ skill.0 }}" {% if learningoutcome_form.skills.value.0 == skill.0 %}selected{% endif %}>{{ skill.1 }}</option>
                                 {% endfor %}
                             </select>
                             

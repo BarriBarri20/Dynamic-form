@@ -2,15 +2,10 @@ from django import forms
 from django.forms.models import inlineformset_factory
 from django.contrib.admin import widgets as widget_element
 from django.contrib.admin import site as admin_site
-from tinymce import TinyMCE
+from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 
 from .models import Assignment, Course, Session, Skill, LearningOutcome
 
-
-class TinyMCEWidget(TinyMCE):
-
-    def use_required_attribute(self, *args):
-        return False
 
 
 class CourseForm(forms.ModelForm):
@@ -42,13 +37,10 @@ class SessionForm(forms.ModelForm):
         widgets = {
             'name':
             forms.TextInput(attrs={'class': 'form-control'}),
-            'session_description':
-            TinyMCEWidget(attrs={
-                'required': False,
-                'cols': 30,
-                'rows': 10
-            }),
+            # 'session_description':
+            # SummernoteWidget()
         }
+
 
 
 class LearningOutcomeForm(forms.ModelForm):

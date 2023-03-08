@@ -36,14 +36,24 @@
 <button id="submit-all-forms" class="inline-flex items-center px-3 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
 Submit the full form from here!
 </button>
-
+<div id="wait-panel" style="display: none;">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+  <p>Please wait while we submit the forms...</p>
+</div>
 <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 <script>
+
+
         const submitButton = document.querySelector('#submit-all-forms');
     
         submitButton.addEventListener('click', async (event) => {
         event.preventDefault();
-    
+
+        const waitPanel = document.querySelector('#wait-panel');
+        waitPanel.style.display = 'block';
+
         const forms = document.querySelectorAll('.submit-me');
     
         // loop through each form and submit it
@@ -56,6 +66,7 @@ Submit the full form from here!
             console.error(error);
           }
         }
+        window.location.href = '/create-course/';
       });
     
       async function submitForm(form) {
@@ -72,6 +83,7 @@ Submit the full form from here!
           throw new Error(response.statusText);
         }
       }
+      
     </script>
     <script>
         $(document).on('click', '.delete-button', function() {
@@ -113,7 +125,9 @@ Submit the full form from here!
     }
     return "";
  }
+ var textareaElement = document.getElementById('id_session_description');
 
+ textareaElement.removeAttribute('style');
   </script>
 
 

@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Htmx Formsets</title>
+    <title>Course management</title>
     <script src="https://unpkg.com/htmx.org@1.5.0"
         integrity="sha384-oGA+prIp5Vchu6we2YkI51UtVzN9Jpx2Z7PnR1I78PnZlN8LkrCT4lqqqmDkyrvI"
         crossorigin="anonymous"></script>
-        <script src="https://cdn.tiny.cloud/1/c4vjxqcbbwlutp6mzg85i4i6anstc0pwscwchpunhbwda00e/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>        
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+
 </head>
 
 <body>
@@ -19,19 +20,9 @@
         {% endblock content %}
     </div>
 
-    <script>
-        const textareas = document.querySelectorAll('textarea.tinymce4-editor');
-        
-        textareas.forEach((textarea) => {
-          tinymce.init({
-            selector: `#${textarea.id}`,
-            // your TinyMCE configuration options here
-          });
-        });
-      </script>
 
     <script>
-
+        textareaElement.removeAttribute('style');
         document.body.addEventListener('htmx:configRequest', (event) => {
             event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
         });

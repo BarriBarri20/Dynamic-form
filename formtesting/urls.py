@@ -38,18 +38,17 @@ urlpatterns = [
     path('update-assignment/<int:pk>', update_assignment, name='update-assignment'),
     path('update-learningoutcome/<int:pk>', update_learningoutcome, name='update-learningoutcome'),
     
-    path('tinymce/', include('tinymce.urls')),
+    path('summernote/', include('django_summernote.urls')),
     
     path('create-course/delete-session/<int:pk>', delete_session, name='delete-session'),
     path('create-course/delete-assignment/<int:pk>', delete_assignment, name='delete-assignment'),
     path('create-course/delete-learningoutcome/<int:pk>', delete_learningoutcome, name='delete-learningoutcome'),
     
-    path('edit-course/delete-session/<int:pk>', delete_session, name='update-delete-session'),
+    path('edit-course/<int:ck>/update-delete-session/<int:pk>', delete_session, name='update-delete-session'),
     path('edit-course/delete-assignment/<int:pk>', delete_assignment, name='update-delete-assignment'),
     path('edit-course/delete-learningoutcome/<int:pk>', delete_learningoutcome, name='update-delete-learningoutcome'),    
     
     path('edit-course/<int:course_id>', edit_course, name='edit-course'),
-    
     path('edit-session/<int:pk>', edit_session, name='edit-session'),
     path('edit-assignment/<int:sk>', edit_assignment, name='edit-assignment'),
     path('edit-learningoutcome/<int:sk>', edit_learningoutcome, name='edit-learningoutcome')

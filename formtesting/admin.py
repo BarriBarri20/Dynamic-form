@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Session, Course, Assignment, Skill, LearningOutcome
 from django.db import models
-from tinymce.widgets import TinyMCE
+from django_summernote.admin import SummernoteModelAdmin
 
 
 class AssignmentInline(admin.TabularInline):
@@ -21,9 +21,14 @@ class CourseAdmin(admin.ModelAdmin):
 
 
 @admin.register(Session)
-class SessionAdmin(admin.ModelAdmin):
+class SessionAdmin(SummernoteModelAdmin):
+    summernote_fields = ('session_description', )
     list_display = ("id", "name", "course")
     list_display_links = ("name", )
-    formfield_overrides = {models.TextField: {'widget': TinyMCE()}}
 
     inlines = (AssignmentInline, LearningOutcomeInline)
+
+
+@admin.register(Skill)
+class SkillAdmin(admin.ModelAdmin):
+    list_display = ("skillname", )

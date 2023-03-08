@@ -27,8 +27,7 @@ class Skill(models.Model):
 
 class Session(models.Model):
     name = models.CharField(max_length=256, blank=True, null=True)
-    session_description = tinymce_models.HTMLField(
-        help_text="Session Description", blank=True, null=True)
+    session_description = models.TextField(max_length=2560, help_text="Session Description", blank=True, null=True)
 
     course = models.ForeignKey(Course, on_delete=models.CASCADE, default=1)
 

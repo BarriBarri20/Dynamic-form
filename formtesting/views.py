@@ -190,20 +190,20 @@ def update_learningoutcome(request, pk):
         return HttpResponse('Learning Outcome updated')
 
 
-def delete_session(response, pk):
+def delete_session(response, pk, ck=None):
     session = get_object_or_404(Session, id=pk)
     session.delete()
     return HttpResponse('Session deleted')
 
 
-def delete_assignment(response, pk):
+def delete_assignment(response, pk, ck=None):
     print(pk)
     assignment = get_object_or_404(Assignment, id=pk)
     assignment.delete()
     return HttpResponse('Assignment deleted')
 
 
-def delete_learningoutcome(response, pk):
+def delete_learningoutcome(response, pk, ck=None):
     print("done hereeee")
     learningoutcome = get_object_or_404(LearningOutcome, id=pk)
     learningoutcome.delete()
